@@ -1,0 +1,40 @@
+# Site
+title: My sample blog
+description: This is a simple descirption for the testcase
+locale: de_DE
+baseurl: ""
+url: ""
+
+# server
+server:
+  port: 8200
+
+# defaults
+defaults:
+- scope:
+    path: ""
+    type: "posts"
+  values:
+    permalink: "/blog/:title/"
+    layout: "post"
+    author: "Georg Henkel"
+
+collections:
+  snippets:
+    output: true
+    
+permalink: /blog/:title/
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# personal
+location: "Augsburg, BY, Germany"
+email: "info@georg-henkel.de"
+
+# pagination
+paginate: 6
+paginate_path: "/blog/page:num/"
+
+# Exclude list
+exclude: [README.md, Gemfile, Gemfile.lock, node_modules, gulpfile.js, package.json, _site, src, vendor, CNAME, LICENSE, Rakefile, old]
