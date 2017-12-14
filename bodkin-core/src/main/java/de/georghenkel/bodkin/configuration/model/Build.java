@@ -41,9 +41,9 @@ public class Build {
 		directories.put("source", ".");
 		directories.put("destination", "_site");
 		directories.put("collections_dir", ".");
-		directories.put("plugins_dir", "_plugins");
-		directories.put("layouts_dir", "_layouts");
+		directories.put("plugin_dir", "_plugin");
+		directories.put("layout_dir", "_layout");
 		directories.put("data_dir", "_data");
-		directories.put("includes_dir", "_includes");
+		directories.put("include_dir", "_include");
 	}
 }
