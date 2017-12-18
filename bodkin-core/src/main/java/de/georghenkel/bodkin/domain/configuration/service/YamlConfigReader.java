@@ -1,4 +1,4 @@
-package de.georghenkel.bodkin.configuration;
+package de.georghenkel.bodkin.domain.configuration.service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,9 +13,9 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 
-import de.georghenkel.bodkin.configuration.model.Collection;
-import de.georghenkel.bodkin.configuration.model.Configuration;
-import de.georghenkel.bodkin.configuration.model.Default;
+import de.georghenkel.bodkin.domain.configuration.model.Collection;
+import de.georghenkel.bodkin.domain.configuration.model.Configuration;
+import de.georghenkel.bodkin.domain.configuration.model.Default;
 
 @ApplicationScoped
 public class YamlConfigReader {
@@ -23,26 +23,21 @@ public class YamlConfigReader {
 	Logger log;
 
 	@SuppressWarnings("unchecked")
-	public Configuration readConfig(File configFile) {
+	public Configuration readConfig(InputStream configFileStream) {
 		Configuration config = new Configuration();
 
-		try (InputStream is = new FileInputStream(configFile)) {
+		Yaml yaml = new Yaml();
+		Map<String, Object> configData = (Map<String, Object>) yaml.load(configFileStream);
 
-			Yaml yaml = new Yaml();
-			Map<String, Object> configData = (Map<String, Object>) yaml.load(is);
+		parseServerSettings(config, configData);
+		parseBuildSettings(config, configData);
 
-			parseServerSettings(config, configData);
-			parseBuildSettings(config, configData);
-
-			if (configData.containsKey("baseurl")) {
-				config.setBaseurl((String) configData.get("baseurl"));
-				configData.remove("baseurl");
-			}
-
-			config.setValues(configData);
-		} catch (IOException ex) {
-			log.error("Error handling input stream", ex);
+		if (configData.containsKey("baseurl")) {
+			config.setBaseurl((String) configData.get("baseurl"));
+			configData.remove("baseurl");
 		}
+
+		config.setValues(configData);
 
 		return config;
 	}

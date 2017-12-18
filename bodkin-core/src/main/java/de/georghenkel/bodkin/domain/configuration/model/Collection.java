@@ -1,4 +1,4 @@
-package de.georghenkel.bodkin.configuration.model;
+package de.georghenkel.bodkin.domain.configuration.model;
 
 public class Collection {
 	private String name;

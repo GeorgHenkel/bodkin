@@ -1,4 +1,4 @@
-package de.georghenkel.bodkin.configuration.model;
+package de.georghenkel.bodkin.domain.configuration.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package de.georghenkel.bodkin;
+package de.georghenkel.bodkin.infrastructure.cdi;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;

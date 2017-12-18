@@ -1,4 +1,4 @@
-package de.georghenkel.bodkin.cli.model;
+package de.georghenkel.bodkin.domain.cli.model;
 
 import java.io.File;
 
