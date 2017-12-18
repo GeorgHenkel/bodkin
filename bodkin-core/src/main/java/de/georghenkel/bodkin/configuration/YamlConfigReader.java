@@ -1,11 +1,12 @@
 package de.georghenkel.bodkin.configuration;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -21,20 +22,11 @@ public class YamlConfigReader {
 	@Inject
 	Logger log;
 
-	private Configuration config;
-
-	@PostConstruct
-	public void init() {
-		config = new Configuration();
-	}
-
-	public Configuration getConfiguration() {
-		return config;
-	}
-
 	@SuppressWarnings("unchecked")
-	public void readConfig(String configFilename) {
-		try (InputStream is = this.getClass().getResourceAsStream("/" + configFilename)) {
+	public Configuration readConfig(File configFile) {
+		Configuration config = new Configuration();
+
+		try (InputStream is = new FileInputStream(configFile)) {
 
 			Yaml yaml = new Yaml();
 			Map<String, Object> configData = (Map<String, Object>) yaml.load(is);
@@ -51,6 +43,8 @@ public class YamlConfigReader {
 		} catch (IOException ex) {
 			log.error("Error handling input stream", ex);
 		}
+
+		return config;
 	}
 
 	@SuppressWarnings("unchecked")
