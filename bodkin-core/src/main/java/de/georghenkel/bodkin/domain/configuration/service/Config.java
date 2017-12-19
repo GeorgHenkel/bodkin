@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import de.georghenkel.bodkin.domain.cli.model.CommandMain;
 import de.georghenkel.bodkin.domain.configuration.model.Configuration;
@@ -30,15 +30,14 @@ public class Config {
 	}
 
 	public void initConfiguration(Optional<? extends CommandMain> command) {
-		try {
-			InputStream configFileStream = loadConfigFile(command);
-
+		try (InputStream configFileStream = loadConfigFile(command)) {
 			YamlConfigReader configReader = new YamlConfigReader();
 			configuration = configReader.readConfig(configFileStream);
 
 			// TODO: overwrite config parameter by command line
 		} catch (IOException ex) {
-			log.error("Unable to load config file");
+			log.error("Error handling config file", ex);
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -46,9 +45,14 @@ public class Config {
 		return configuration;
 	}
 
-	private InputStream loadConfigFile(Optional<? extends CommandMain> command) throws FileNotFoundException {
-		File configFile = command.isPresent() ? command.get().getConfig() : getDefaultConfigFile();
-		return new FileInputStream(configFile);
+	private InputStream loadConfigFile(Optional<? extends CommandMain> command) {
+		try {
+			File configFile = command.isPresent() ? command.get().getConfig() : getDefaultConfigFile();
+			log.info("Loading configuration: " + configFile.getAbsolutePath());
+			return new FileInputStream(configFile);
+		} catch (FileNotFoundException ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 
 	private File getDefaultConfigFile() {

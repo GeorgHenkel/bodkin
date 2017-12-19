@@ -11,6 +11,6 @@ import org.slf4j.LoggerFactory;
 public class Resources {
 	@Produces
 	public Logger createLogger(InjectionPoint injectionPoint) {
-		return LoggerFactory.getLogger(injectionPoint.getClass().getDeclaringClass());
+		return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass());
 	}
 }
