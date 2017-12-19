@@ -5,36 +5,36 @@ import com.beust.jcommander.Parameters;
 
 @Parameters(separators = " ", commandDescription = "Serve your site locally")
 public class CommandServe extends CommandBuild {
-	public static final String COMMAND_TYPE = "serve";
+  public static final String COMMAND_TYPE = "serve";
 
-	@Parameter(names = { "--port", "-P" }, description = "Port to listen on.")
-	private String port;
-	@Parameter(names = { "--host", "-H" }, description = "Host to bind to.")
-	private String host;
-	@Parameter(names = "--no-build", description = "Skip the initial site build.")
-	private boolean skipBuild = false;
+  @Parameter(names = {"--port", "-P"}, description = "Port to listen on.")
+  private String port;
+  @Parameter(names = {"--host", "-H"}, description = "Host to bind to.")
+  private String host;
+  @Parameter(names = "--no-build", description = "Skip the initial site build.")
+  private boolean skipBuild = false;
 
-	public String getPort() {
-		return port;
-	}
+  public String getPort() {
+    return port;
+  }
 
-	public void setPort(String port) {
-		this.port = port;
-	}
+  public void setPort(final String port) {
+    this.port = port;
+  }
 
-	public String getHost() {
-		return host;
-	}
+  public String getHost() {
+    return host;
+  }
 
-	public void setHost(String host) {
-		this.host = host;
-	}
+  public void setHost(final String host) {
+    this.host = host;
+  }
 
-	public boolean isSkipBuild() {
-		return skipBuild;
-	}
+  public boolean isSkipBuild() {
+    return skipBuild;
+  }
 
-	public void setSkipBuild(boolean skipBuild) {
-		this.skipBuild = skipBuild;
-	}
+  public void setSkipBuild(final boolean skipBuild) {
+    this.skipBuild = skipBuild;
+  }
 }
